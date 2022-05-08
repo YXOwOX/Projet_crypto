@@ -1,0 +1,22 @@
+<?php //App%255CEntity%255CCryptocurrency%2524crpt_Comments
+
+return [PHP_INT_MAX, static function () { return \Symfony\Component\VarExporter\Internal\Hydrator::hydrate(
+    $o = [
+        clone (\Symfony\Component\VarExporter\Internal\Registry::$prototypes['Doctrine\\ORM\\Mapping\\ManyToOne'] ?? \Symfony\Component\VarExporter\Internal\Registry::p('Doctrine\\ORM\\Mapping\\ManyToOne')),
+    ],
+    null,
+    [
+        'stdClass' => [
+            'targetEntity' => [
+                'App\\Entity\\Comment',
+            ],
+            'inversedBy' => [
+                'com_Subject',
+            ],
+        ],
+    ],
+    [
+        $o[0],
+    ],
+    []
+); }];
