@@ -64,6 +64,24 @@ class CryptocurrencyRepository extends ServiceEntityRepository
     }
     */
 
+
+    /**
+     * @return Cryptocurrency[] Returns an array of Cryptocurrency objects
+    */
+    public function findByCategory($value)
+    {
+        return $this->createQueryBuilder('c')
+            ->innerJoin('c.crpt_Categories', 'ca')
+            ->andWhere('ca.cat_Name = :value')
+            ->setParameter('value', $value)
+            ->orderBy('c.crpt_Name', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+
+
     /*
     public function findOneBySomeField($value): ?Cryptocurrency
     {

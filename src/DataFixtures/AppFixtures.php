@@ -133,7 +133,7 @@ class AppFixtures extends Fixture
         $parameters = [
             'vs_currency' => 'usd',
             'order' => 'market_cap_desc',
-            'per_page' => '10'    //Count of retrieved currencies
+            'per_page' => '50'    //Count of retrieved currencies
         ];
 
         $headers = [
