@@ -45,13 +45,16 @@ class User
     private $user_Favourites;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Comment::class, inversedBy="com_Owner")
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="com_Owner")
      */
     private $user_Comments;
+
+
 
     public function __construct()
     {
         $this->user_Favourites = new ArrayCollection();
+        $this->user_Comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -134,15 +137,34 @@ class User
         return $this;
     }
 
-    public function getUserComments(): ?Comment
+    /**
+     * @return Collection<int, Comment>
+     */
+    public function getUserComments(): Collection
     {
         return $this->user_Comments;
     }
 
-    public function setUserComments(?Comment $user_Comments): self
+    public function addUserComment(Comment $userComment): self
     {
-        $this->user_Comments = $user_Comments;
+        if (!$this->user_Comments->contains($userComment)) {
+            $this->user_Comments[] = $userComment;
+            $userComment->setComOwner($this);
+        }
 
         return $this;
     }
+
+    public function removeUserComment(Comment $userComment): self
+    {
+        if ($this->user_Comments->removeElement($userComment)) {
+            // set the owning side to null (unless already changed)
+            if ($userComment->getComOwner() === $this) {
+                $userComment->setComOwner(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

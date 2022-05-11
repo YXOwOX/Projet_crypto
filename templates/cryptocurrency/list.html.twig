@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+    <table class="table table-borderless text-center">
+        <tr class = "sticky-top">
+            <th class="active text-center">{{knp_pagination_sortable(pagination, 'Nom', 'a.crpt_Name')}}</th>
+            <th class="active text-center">{{knp_pagination_sortable(pagination, 'Symbole', 'a.crpt_Symbol')}}</th>
+            <th class="active text-center">{{knp_pagination_sortable(pagination, 'Prix', 'a.crpt_Price')}}</th>
+            <th class="active text-center">{{knp_pagination_sortable(pagination, 'Market Cap', 'a.crpt_MarketCap')}}</th>
+        </tr>
+
+        {% for crypto in pagination %}
+            <tr>
+                <td><a href="#">{{ crypto.CrptName }}</a></td>
+                <td>
+                    <a href="#">
+                        {{ crypto.CrptSymbol }}
+                    </a>
+                </td>
+                <td>{{ crypto.CrptPrice }}</td>
+                <td>{{ crypto.CrptMarketCap }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
