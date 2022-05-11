@@ -6,11 +6,12 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
-class User
+class User implements UserInterface, \Serializable
 {
     /**
      * @ORM\Id
@@ -34,10 +35,6 @@ class User
      */
     private $user_Mail;
 
-    /**
-     * @ORM\Column(type="string", length=50)
-     */
-    private $user_Role;
 
     /**
      * @ORM\ManyToMany(targetEntity=Cryptocurrency::class, mappedBy="crpt_fans")
@@ -49,12 +46,21 @@ class User
      */
     private $user_Comments;
 
+    /**
+     * @ORM\Column(type="array")
+     */
+    private $user_Role = [];
 
+
+    public function __toString() {
+      return $this->user_Pseudo;
+    }
 
     public function __construct()
     {
         $this->user_Favourites = new ArrayCollection();
         $this->user_Comments = new ArrayCollection();
+        $this->isActive = true;
     }
 
     public function getId(): ?int
@@ -98,12 +104,15 @@ class User
         return $this;
     }
 
-    public function getUserRole(): ?string
+
+    public function getUserRole(): ?array
     {
-        return $this->user_Role;
+        $roles = $this->user_Role;
+        $roles[] = 'ROLE_USER';
+        return array_unique($roles);
     }
 
-    public function setUserRole(string $user_Role): self
+    public function setUserRole(array $user_Role): self
     {
         $this->user_Role = $user_Role;
 
@@ -166,5 +175,61 @@ class User
 
         return $this;
     }
+
+
+
+
+    public function getUsername()
+    {
+        return $this->user_Pseudo;
+    }
+
+    public function getPassword()
+   {
+       return $this->user_Password;
+   }
+
+   public function getRoles(): array
+   {
+       $roles = $this->user_Role;
+       // guarantee every user at least has ROLE_USER
+       $roles[] = 'ROLE_USER';
+
+       return array_unique($roles);
+   }
+
+    public function eraseCredentials()
+    {
+    }
+
+    public function getSalt()
+   {
+       return null;
+   }
+
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->user_Pseudo,
+            $this->user_Password,
+            // see section on salt below
+            // $this->salt,
+        ));
+    }
+
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->user_Pseudo,
+            $this->user_Password,
+            // see section on salt below
+            // $this->salt
+        ) = unserialize($serialized, array('allowed_classes' => false));
+    }
+
 
 }

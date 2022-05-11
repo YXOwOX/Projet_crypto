@@ -31,7 +31,7 @@ class AppFixtures extends Fixture
       $obj_User->setUserPseudo('root');
       $obj_User->setUserPassword(password_hash("ROOTmalzkejrht167", PASSWORD_BCRYPT));
       $obj_User->setUserMail('admin@admin.fr');
-      $obj_User->setUserRole('ROLE_ADMIN');  //ROLE_ADMIN : administrateur ROLE_LOGGED : utilisateur inscrit ROLE:UNLOGGED : anonyme
+      $obj_User->setUserRole(array('ROLE_ADMIN'));  //ROLE_ADMIN : administrateur ROLE_LOGGED : utilisateur inscrit ROLE:UNLOGGED : anonyme
       $manager->persist($obj_User);
       $this->addReference(self::USER_REFERENCE.'9999', $obj_User);
 
@@ -39,7 +39,7 @@ class AppFixtures extends Fixture
       $obj_User->setUserPseudo('YXOwOX');
       $obj_User->setUserPassword(password_hash("3LGLxfizc2", PASSWORD_BCRYPT));
       $obj_User->setUserMail('thibault-lb@hotmail.fr');
-      $obj_User->setUserRole('ROLE_ADMIN');  //ROLE_ADMIN : administrateur ROLE_LOGGED : utilisateur inscrit ROLE:UNLOGGED : anonyme
+      $obj_User->setUserRole(array('ROLE_ADMIN'));  //ROLE_ADMIN : administrateur ROLE_LOGGED : utilisateur inscrit ROLE:UNLOGGED : anonyme
       $manager->persist($obj_User);
       $this->addReference(self::USER_REFERENCE.'0', $obj_User);
 
@@ -47,7 +47,7 @@ class AppFixtures extends Fixture
       $obj_User->setUserPseudo('EGAIN');
       $obj_User->setUserPassword(password_hash("default28", PASSWORD_BCRYPT));
       $obj_User->setUserMail('Louise.Egain@outlook.fr');
-      $obj_User->setUserRole('ROLE_ADMIN');  //ROLE_ADMIN : administrateur ROLE_LOGGED : utilisateur inscrit ROLE:UNLOGGED : anonyme
+      $obj_User->setUserRole(array('ROLE_ADMIN'));  //ROLE_ADMIN : administrateur ROLE_LOGGED : utilisateur inscrit ROLE:UNLOGGED : anonyme
       $manager->persist($obj_User);
       $this->addReference(self::USER_REFERENCE.'1', $obj_User);
 
@@ -55,7 +55,7 @@ class AppFixtures extends Fixture
       $obj_User->setUserPseudo('USER_TEST_A');
       $obj_User->setUserPassword(password_hash("testdefault28", PASSWORD_BCRYPT));
       $obj_User->setUserMail('USERA@hotmail.fr');
-      $obj_User->setUserRole('ROLE_LOGGED');  //ROLE_ADMIN : administrateur ROLE_LOGGED : utilisateur inscrit ROLE:UNLOGGED : anonyme
+      $obj_User->setUserRole(array('ROLE_LOGGED'));  //ROLE_ADMIN : administrateur ROLE_LOGGED : utilisateur inscrit ROLE:UNLOGGED : anonyme
       $manager->persist($obj_User);
       $this->addReference(self::USER_REFERENCE.'2', $obj_User);
 
@@ -63,7 +63,7 @@ class AppFixtures extends Fixture
       $obj_User->setUserPseudo('USER_TEST_B');
       $obj_User->setUserPassword(password_hash("testdefault28", PASSWORD_BCRYPT));
       $obj_User->setUserMail('USERB@hotmail.fr');
-      $obj_User->setUserRole('ROLE_UNLOGGED');  //ROLE_ADMIN : administrateur ROLE_LOGGED : utilisateur inscrit ROLE:UNLOGGED : anonyme
+      $obj_User->setUserRole(array('ROLE_UNLOGGED'));  //ROLE_ADMIN : administrateur ROLE_LOGGED : utilisateur inscrit ROLE:UNLOGGED : anonyme
       $manager->persist($obj_User);
       $this->addReference(self::USER_REFERENCE.'3', $obj_User);
 

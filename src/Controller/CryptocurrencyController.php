@@ -15,7 +15,7 @@ class CryptocurrencyController extends AbstractController
 {
 
     /**
-     * @Route("/cryptocurrency", name="app_cryptocurrency")
+     * @Route("/user/cryptocurrency", name="app_cryptocurrency")
      */
      public function listAction(EntityManagerInterface $em, PaginatorInterface $paginator, Request $request)
      {
@@ -37,14 +37,14 @@ class CryptocurrencyController extends AbstractController
     }
 
     /**
-     * @Route("/category/{cat}", name = "app_category")
+     * @Route("/user/category/{cat}", name = "app_category")
      */
      public function listCategory(PaginatorInterface $paginator, Request $request, $cat)
      {
        //$crptRepo = new CryptocurrencyRepository();
        $query = $this->getDoctrine()->getRepository(Cryptocurrency::class)->findByCategory($cat);
 
-       dump($cat  );
+       dump($cat);
 
        $pagination = $paginator->paginate(
            $query, /* query NOT result */
@@ -56,6 +56,5 @@ class CryptocurrencyController extends AbstractController
            'pagination' => $pagination,
        ]);
      }
-
 
 }
