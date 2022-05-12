@@ -11,11 +11,14 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\CryptocurrencyRepository;
 
+/**
+ * @Route("/cryptocurrency")
+ */
 class CryptocurrencyController extends AbstractController
 {
 
     /**
-     * @Route("/user/cryptocurrency", name="app_cryptocurrency")
+     * @Route("/", name="app_cryptocurrency")
      */
      public function listAction(EntityManagerInterface $em, PaginatorInterface $paginator, Request $request)
      {
@@ -37,7 +40,7 @@ class CryptocurrencyController extends AbstractController
     }
 
     /**
-     * @Route("/user/category/{cat}", name = "app_category")
+     * @Route("/category/{cat}", name = "app_category")
      */
      public function listCategory(PaginatorInterface $paginator, Request $request, $cat)
      {
@@ -55,6 +58,18 @@ class CryptocurrencyController extends AbstractController
        return $this->render('cryptocurrency/list.html.twig', [
            'pagination' => $pagination,
        ]);
+     }
+
+     /**
+      * @Route("/{id}", name="app_crpt_show", methods={"GET","POST"})
+      */
+     public function show(Cryptocurrency $crpt, $id): Response
+     {
+         $comments = $this->getDoctrine()->getRepository(Cryptocurrency::class)->findOneBy(array('id' => $id))->getCrptComments();
+         return $this->render('cryptocurrency/show.html.twig', [
+             'crpt' => $crpt,
+             'comments' => $comments,
+         ]);
      }
 
 }
