@@ -8,16 +8,8 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ user.id }}</td>
-            </tr>
-            <tr>
                 <th>User_Pseudo</th>
                 <td>{{ user.userPseudo }}</td>
-            </tr>
-            <tr>
-                <th>User_Password</th>
-                <td>{{ user.userPassword }}</td>
             </tr>
             <tr>
                 <th>User_Mail</th>
@@ -35,4 +27,7 @@
     <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
 
     {{ include('user/_delete_form.html.twig') }}
+
+    {{ include('comment/index.html.twig') }}
+
 {% endblock %}
