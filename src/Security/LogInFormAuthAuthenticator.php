@@ -30,13 +30,15 @@ class LogInFormAuthAuthenticator extends AbstractFormLoginAuthenticator implemen
     private $urlGenerator;
     private $csrfTokenManager;
     private $passwordEncoder;
+    private $security;
 
-    public function __construct(EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder)
+    public function __construct(Security $security, EntityManagerInterface $entityManager, UrlGeneratorInterface $urlGenerator, CsrfTokenManagerInterface $csrfTokenManager, UserPasswordEncoderInterface $passwordEncoder)
     {
         $this->entityManager = $entityManager;
         $this->urlGenerator = $urlGenerator;
         $this->csrfTokenManager = $csrfTokenManager;
         $this->passwordEncoder = $passwordEncoder;
+        $this->security = $security;
     }
 
     public function supports(Request $request)
@@ -97,7 +99,19 @@ class LogInFormAuthAuthenticator extends AbstractFormLoginAuthenticator implemen
 
         // For example : return new RedirectResponse($this->urlGenerator->generate('some_route'));
         //throw new \Exception('/user/'.__FILE__);
-        return new RedirectResponse($this->urlGenerator->generate('app_login'));
+
+
+        $user = $this->security->getUser();
+
+        if($user && in_array('ROLE_ADMIN', $user->getRoles())){
+            return new RedirectResponse($this->urlGenerator->generate('app_admin'));
+        }
+        elseif ($user && in_array('ROLE_USER', $user->getRoles())) {
+            return new RedirectResponse($this->urlGenerator->generate('app_auth'));
+        }
+        else {
+            return new RedirectResponse($this->urlGenerator->generate('app_home'));
+        }
     }
 
     protected function getLoginUrl()
