@@ -232,5 +232,4 @@ class User implements UserInterface, \Serializable
         ) = unserialize($serialized, array('allowed_classes' => false));
     }
 
-
 }
