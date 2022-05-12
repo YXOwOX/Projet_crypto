@@ -39,14 +39,6 @@ class Comment
      */
     private $com_Subject;
 
-    /**
-    * @ORM\PrePersist()
-    */
-    public function prePersist()
-    {
-        $this->com_DateTime = new \DateTime('NOW');
-    }
-
 
     public function getId(): ?int
     {
