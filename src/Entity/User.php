@@ -52,6 +52,7 @@ class User implements UserInterface, \Serializable
     private $user_Role = [];
 
 
+
     public function __toString() {
       return $this->user_Pseudo;
     }
@@ -112,9 +113,9 @@ class User implements UserInterface, \Serializable
         return array_unique($roles);
     }
 
-    public function setUserRole(array $user_Role): self
+    public function setUserRole(array $roles): self
     {
-        $this->user_Role = $user_Role;
+        $this->user_Role = $roles;
 
         return $this;
     }
