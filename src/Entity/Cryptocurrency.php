@@ -49,20 +49,28 @@ class Cryptocurrency
      */
     private $crpt_fans;
 
+
     /**
-     * @ORM\ManyToOne(targetEntity=Comment::class, inversedBy="com_Subject")
+     * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="cat_cryptocurrencies", cascade = {"persist"})
+     */
+    private $crpt_Categories;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="com_Subject")
      */
     private $crpt_Comments;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="cat_cryptocurrencies")
-     */
-    private $crpt_Categories;
+
+    public function __toString()
+    {
+      return $this->crpt_Name;
+    }
 
     public function __construct()
     {
         $this->crpt_fans = new ArrayCollection();
         $this->crpt_Categories = new ArrayCollection();
+        $this->crpt_Comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -166,18 +174,6 @@ class Cryptocurrency
         return $this;
     }
 
-    public function getCrptComments(): ?Comment
-    {
-        return $this->crpt_Comments;
-    }
-
-    public function setCrptComments(?Comment $crpt_Comments): self
-    {
-        $this->crpt_Comments = $crpt_Comments;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Category>
      */
@@ -198,6 +194,36 @@ class Cryptocurrency
     public function removeCrptCategory(Category $crptCategory): self
     {
         $this->crpt_Categories->removeElement($crptCategory);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Comment>
+     */
+    public function getCrptComments(): Collection
+    {
+        return $this->crpt_Comments;
+    }
+
+    public function addCrptComment(Comment $crptComment): self
+    {
+        if (!$this->crpt_Comments->contains($crptComment)) {
+            $this->crpt_Comments[] = $crptComment;
+            $crptComment->setComSubject($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCrptComment(Comment $crptComment): self
+    {
+        if ($this->crpt_Comments->removeElement($crptComment)) {
+            // set the owning side to null (unless already changed)
+            if ($crptComment->getComSubject() === $this) {
+                $crptComment->setComSubject(null);
+            }
+        }
 
         return $this;
     }

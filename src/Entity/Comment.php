@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\CommentRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -25,33 +23,22 @@ class Comment
     private $com_DateTime;
 
     /**
-     * @ORM\Column(type="string", length=1999)
+     * @ORM\Column(type="string", length=999)
      */
-    private $com_text;
+    private $com_Text;
 
     /**
-     * @ORM\OneToMany(targetEntity=User::class, mappedBy="user_Comments")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="user_Comments")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $com_Owner;
 
     /**
-     * @ORM\OneToMany(targetEntity=Cryptocurrency::class, mappedBy="crpt_Comments")
+     * @ORM\ManyToOne(targetEntity=Cryptocurrency::class, inversedBy="crpt_Comments")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $com_Subject;
 
-    /**
-    * @ORM\PrePersist()
-    */
-    public function prePersist()
-    {
-        $this->com_DateTime = new \DateTime();
-    }
-
-    public function __construct()
-    {
-        $this->com_Owner = new ArrayCollection();
-        $this->com_Subject = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -72,72 +59,36 @@ class Comment
 
     public function getComText(): ?string
     {
-        return $this->com_text;
+        return $this->com_Text;
     }
 
-    public function setComText(string $com_text): self
+    public function setComText(string $com_Text): self
     {
-        $this->com_text = $com_text;
+        $this->com_Text = $com_Text;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, User>
-     */
-    public function getComOwner(): Collection
+    public function getComOwner(): ?User
     {
         return $this->com_Owner;
     }
 
-    public function addComOwner(User $comOwner): self
+    public function setComOwner(?User $com_Owner): self
     {
-        if (!$this->com_Owner->contains($comOwner)) {
-            $this->com_Owner[] = $comOwner;
-            $comOwner->setUserComments($this);
-        }
+        $this->com_Owner = $com_Owner;
 
         return $this;
     }
 
-    public function removeComOwner(User $comOwner): self
-    {
-        if ($this->com_Owner->removeElement($comOwner)) {
-            // set the owning side to null (unless already changed)
-            if ($comOwner->getUserComments() === $this) {
-                $comOwner->setUserComments(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Cryptocurrency>
-     */
-    public function getComSubject(): Collection
+    public function getComSubject(): ?Cryptocurrency
     {
         return $this->com_Subject;
     }
 
-    public function addComSubject(Cryptocurrency $comSubject): self
+    public function setComSubject(?Cryptocurrency $com_Subject): self
     {
-        if (!$this->com_Subject->contains($comSubject)) {
-            $this->com_Subject[] = $comSubject;
-            $comSubject->setCrptComments($this);
-        }
-
-        return $this;
-    }
-
-    public function removeComSubject(Cryptocurrency $comSubject): self
-    {
-        if ($this->com_Subject->removeElement($comSubject)) {
-            // set the owning side to null (unless already changed)
-            if ($comSubject->getCrptComments() === $this) {
-                $comSubject->setCrptComments(null);
-            }
-        }
+        $this->com_Subject = $com_Subject;
 
         return $this;
     }

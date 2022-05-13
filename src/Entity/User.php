@@ -6,11 +6,12 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
-class User
+class User implements UserInterface, \Serializable
 {
     /**
      * @ORM\Id
@@ -34,10 +35,6 @@ class User
      */
     private $user_Mail;
 
-    /**
-     * @ORM\Column(type="string", length=50)
-     */
-    private $user_Role;
 
     /**
      * @ORM\ManyToMany(targetEntity=Cryptocurrency::class, mappedBy="crpt_fans")
@@ -45,13 +42,26 @@ class User
     private $user_Favourites;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Comment::class, inversedBy="com_Owner")
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="com_Owner")
      */
     private $user_Comments;
+
+    /**
+     * @ORM\Column(type="array")
+     */
+    private $user_Role = [];
+
+
+
+    public function __toString() {
+      return $this->user_Pseudo;
+    }
 
     public function __construct()
     {
         $this->user_Favourites = new ArrayCollection();
+        $this->user_Comments = new ArrayCollection();
+        $this->isActive = true;
     }
 
     public function getId(): ?int
@@ -95,14 +105,17 @@ class User
         return $this;
     }
 
-    public function getUserRole(): ?string
+
+    public function getUserRole(): ?array
     {
-        return $this->user_Role;
+        $roles = $this->user_Role;
+        $roles[] = 'ROLE_USER';
+        return array_unique($roles);
     }
 
-    public function setUserRole(string $user_Role): self
+    public function setUserRole(array $roles): self
     {
-        $this->user_Role = $user_Role;
+        $this->user_Role = $roles;
 
         return $this;
     }
@@ -134,15 +147,90 @@ class User
         return $this;
     }
 
-    public function getUserComments(): ?Comment
+    /**
+     * @return Collection<int, Comment>
+     */
+    public function getUserComments(): Collection
     {
         return $this->user_Comments;
     }
 
-    public function setUserComments(?Comment $user_Comments): self
+    public function addUserComment(Comment $userComment): self
     {
-        $this->user_Comments = $user_Comments;
+        if (!$this->user_Comments->contains($userComment)) {
+            $this->user_Comments[] = $userComment;
+            $userComment->setComOwner($this);
+        }
 
         return $this;
     }
+
+    public function removeUserComment(Comment $userComment): self
+    {
+        if ($this->user_Comments->removeElement($userComment)) {
+            // set the owning side to null (unless already changed)
+            if ($userComment->getComOwner() === $this) {
+                $userComment->setComOwner(null);
+            }
+        }
+
+        return $this;
+    }
+
+
+
+
+    public function getUsername()
+    {
+        return $this->user_Pseudo;
+    }
+
+    public function getPassword()
+   {
+       return $this->user_Password;
+   }
+
+   public function getRoles(): array
+   {
+       $roles = $this->user_Role;
+       // guarantee every user at least has ROLE_USER
+       $roles[] = 'ROLE_USER';
+
+       return array_unique($roles);
+   }
+
+    public function eraseCredentials()
+    {
+    }
+
+    public function getSalt()
+   {
+       return null;
+   }
+
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->user_Pseudo,
+            $this->user_Password,
+            // see section on salt below
+            // $this->salt,
+        ));
+    }
+
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->user_Pseudo,
+            $this->user_Password,
+            // see section on salt below
+            // $this->salt
+        ) = unserialize($serialized, array('allowed_classes' => false));
+    }
+
+
 }

@@ -25,12 +25,12 @@ class Category
     private $cat_Name;
 
     /**
-     * @ORM\Column(type="string", length=500)
+     * @ORM\Column(type="string", length=9999)
      */
     private $cat_Desc;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Cryptocurrency::class, mappedBy="crpt_Categories")
+     * @ORM\ManyToMany(targetEntity=Cryptocurrency::class, mappedBy="crpt_Categories", cascade = {"persist"})
      */
     private $cat_cryptocurrencies;
 
