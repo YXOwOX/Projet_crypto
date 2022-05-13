@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Cryptocurrency;
+use App\Entity\Category;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,6 +25,9 @@ class CryptocurrencyController extends AbstractController
      {
        //$query = $this->getDoctrine()->getRepository(Cryptocurrency::class)->findAll();
 
+         dump($categories = $this->getDoctrine()->getRepository(Category::class)->findAll());
+         $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
+
          $dql   = "SELECT a FROM App\Entity\Cryptocurrency a";
          $query = $em->createQuery($dql);
 
@@ -36,6 +40,7 @@ class CryptocurrencyController extends AbstractController
          // parameters to template
          return $this->render('cryptocurrency/list.html.twig', [
              'pagination' => $pagination,
+             'cats_Name' => $categories,
          ]);
     }
 
