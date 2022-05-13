@@ -2,6 +2,10 @@
 
 
 
+{% block tools %}
+    {{ include('tools/tools.html.twig') }}
+{% endblock %}
+
 {% block body %}
     <table class="table table-borderless text-center">
         <tr class = "sticky-top">
@@ -9,18 +13,16 @@
             <th class="active text-center">{{knp_pagination_sortable(pagination, 'Symbole', 'a.crpt_Symbol')}}</th>
             <th class="active text-center">{{knp_pagination_sortable(pagination, 'Prix', 'a.crpt_Price')}}</th>
             <th class="active text-center">{{knp_pagination_sortable(pagination, 'Market Cap', 'a.crpt_MarketCap')}}</th>
+            <th class="active text-center">{{knp_pagination_sortable(pagination, 'Followers', 'a.crpt_TwitterFollowers')}}</th>
         </tr>
 
         {% for crypto in pagination %}
             <tr>
-                <td><a href="#">{{ crypto.CrptName }}</a></td>
-                <td>
-                    <a href="#">
-                        {{ crypto.CrptSymbol }}
-                    </a>
-                </td>
-                <td>{{ crypto.CrptPrice }}</td>
+                <td><a href="{{ path('app_crpt_show', {'id': crypto.id}) }}">{{ crypto.CrptName }}</a></td>
+                <td>{{ crypto.CrptSymbol }}</td>
+                <td>{{ crypto.CrptPrice }} USD</td>
                 <td>{{ crypto.CrptMarketCap }}</td>
+                <td>{{ crypto.CrptTwitterFollowers }}</td>
             </tr>
         {% endfor %}
     </table>

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Cryptocurrency;
+use App\Entity\Category;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -11,15 +12,21 @@ use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\CryptocurrencyRepository;
 
+/**
+ * @Route("/cryptocurrency")
+ */
 class CryptocurrencyController extends AbstractController
 {
 
     /**
-     * @Route("/cryptocurrency", name="app_cryptocurrency")
+     * @Route("/", name="app_cryptocurrency")
      */
      public function listAction(EntityManagerInterface $em, PaginatorInterface $paginator, Request $request)
      {
        //$query = $this->getDoctrine()->getRepository(Cryptocurrency::class)->findAll();
+
+         dump($categories = $this->getDoctrine()->getRepository(Category::class)->findAll());
+         $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
 
          $dql   = "SELECT a FROM App\Entity\Cryptocurrency a";
          $query = $em->createQuery($dql);
@@ -33,6 +40,7 @@ class CryptocurrencyController extends AbstractController
          // parameters to template
          return $this->render('cryptocurrency/list.html.twig', [
              'pagination' => $pagination,
+             'cats_Name' => $categories,
          ]);
     }
 
@@ -44,7 +52,7 @@ class CryptocurrencyController extends AbstractController
        //$crptRepo = new CryptocurrencyRepository();
        $query = $this->getDoctrine()->getRepository(Cryptocurrency::class)->findByCategory($cat);
 
-       dump($cat  );
+       dump($cat);
 
        $pagination = $paginator->paginate(
            $query, /* query NOT result */
@@ -57,5 +65,16 @@ class CryptocurrencyController extends AbstractController
        ]);
      }
 
+     /**
+      * @Route("/{id}", name="app_crpt_show", methods={"GET","POST"})
+      */
+     public function show(Cryptocurrency $crpt, $id): Response
+     {
+         $comments = $this->getDoctrine()->getRepository(Cryptocurrency::class)->findOneBy(array('id' => $id))->getCrptComments();
+         return $this->render('cryptocurrency/show.html.twig', [
+             'crpt' => $crpt,
+             'comments' => $comments,
+         ]);
+     }
 
 }

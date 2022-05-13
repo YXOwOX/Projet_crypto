@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User{% endblock %}
+
+{% block body %}
+    <h1>Cryptocurrency</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Nom</th>
+                <td>{{ crpt.crptName }}</td>
+            </tr>
+            <tr>
+                <th>Symbole</th>
+                <td>{{ crpt.crptSymbol }}</td>
+            </tr>
+            <tr>
+                <th>Prix Actuel</th>
+                <td>{{ crpt.crptPrice }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_comment_new', {'id': crpt.id}) }}">Commenter</a>
+    
+    {{ include('comment/index.html.twig') }}
+
+{% endblock %}

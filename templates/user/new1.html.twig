@@ -1,0 +1,26 @@
+{% block title %}New Utilisateur{% endblock %}
+
+{% block body %}
+<h1>Create new Utilisateur</h1>
+
+{{ form_start(form, {'attr': {'id': 'new_edit_user'}}) }}
+{# utilisation de classes bootstrap pour la mise en forme #}
+        <div class="row">
+                <div class="col-12">
+                        {{ form_label(form.user_Pseudo) }}
+                        {{ form_widget(form.user_Pseudo) }}
+                </div>
+                <div class="col-12">
+                        {{ form_label(form.user_Password) }}
+                        {{ form_widget(form.user_Password) }}
+                </div>
+                <div class="col-12">
+                        <label for="verifpass">Saisir une seconde fois le mot de passe</label>
+                        <input type="user_Password" id="verifpass" required>
+                </div>
+        </div>
+        <button class="btn btn-success">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
+
+<a href="{{ path('app_cryptocurrency') }}">back to list</a>
+{% endblock %}

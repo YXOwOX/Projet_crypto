@@ -60,6 +60,12 @@ class Cryptocurrency
      */
     private $crpt_Comments;
 
+
+    public function __toString()
+    {
+      return $this->crpt_Name;
+    }
+
     public function __construct()
     {
         $this->crpt_fans = new ArrayCollection();
