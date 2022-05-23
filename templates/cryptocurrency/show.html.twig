@@ -1,29 +1,31 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}User{% endblock %}
+{% block title %}{{ 'crpt.show.title'|trans }}{% endblock %}
 
 {% block body %}
-    <h1>Cryptocurrency</h1>
+    <h1>{{ 'crpt.show.title'|trans }}</h1>
 
     <table class="table">
         <tbody>
             <tr>
-                <th>Nom</th>
+                <th>{{ 'Nom'|trans }}</th>
                 <td>{{ crpt.crptName }}</td>
             </tr>
             <tr>
-                <th>Symbole</th>
+                <th>{{ 'Symbole'|trans }}</th>
                 <td>{{ crpt.crptSymbol }}</td>
             </tr>
             <tr>
-                <th>Prix Actuel</th>
+                <th>{{ 'Prix'|trans }}</th>
                 <td>{{ crpt.crptPrice }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_comment_new', {'id': crpt.id}) }}">Commenter</a>
-    
+    <a href="{{ path('app_comment_new', {'id': crpt.id}) }}">{{ 'crpt.show.comment'|trans }}</a>
+
+    <a href="{{ path('app_comment_index') }}">{{ 'back to list'|trans }}</a>
+
     {{ include('comment/index.html.twig') }}
 
 {% endblock %}

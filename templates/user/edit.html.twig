@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Utilisateur{% endblock %}
+{% block title %}{{ 'user.edit.title'|trans }}{% endblock %}
 
 {% block body %}
-        <h1>Edit Utilisateur</h1>
+        <h1>{{ 'user.edit.title'|trans }}</h1>
 
         {{ form_start(form, {'attr': {'id': 'new_edit_user'}}) }}
                 <div class="row">
@@ -16,14 +16,14 @@
                                 {{ form_widget(form.user_Password) }}
                         </div>
                         <div class="col-12">
-                                <label for="verifpass">Saisir une seconde fois le mot de passe</label>
+                                <label for="verifpass">{{ 'user.edit.pswd2'|trans }}</label>
                                 <input type="password" id="verifpass" required>
                         </div>
                 </div>
-                <button class="btn btn-success">{{ button_label|default('Update') }}</button>
+                <button class="btn btn-success">{{ 'user.edit.updatebtn'|trans }}</button>
         {{ form_end(form) }}
 
-        <a href="{{ path('app_user_index') }}">back to list</a>
+        <a href="{{ path('app_user_index') }}">{{ 'back to list'|trans }}</a>
 
         {{ include('user/_delete_form.html.twig') }}
 {% endblock %}

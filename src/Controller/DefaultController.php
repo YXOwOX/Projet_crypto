@@ -8,6 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
+
 class DefaultController extends AbstractController
 {
     /**
@@ -22,4 +23,5 @@ class DefaultController extends AbstractController
         //     'controller_name' => 'DefaultController',
         // ]);
     }
+
 }
