@@ -20,8 +20,22 @@
   </div>
   -->
 
-  <select name="cars" id="cars" multiple>
+
+
+<form method = "post">
+  <div class="search-container">
+     <input type="text" placeholder="Search.." name="name">
+     <a  class="btn btn-lg btn-primary" type = "submit"><i class="fa fa-search"></i></a>
+  </div>
+</form>
+
+
+
+
+<form>
+  <select name="cars" id="cars">
   {% for category in cats_Name %}
     <option value="{{ category.CatName }}">{{ category.CatName }}</option>
   {% endfor %}
   </select>
+</form>

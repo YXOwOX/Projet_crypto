@@ -9,9 +9,7 @@
 {% block body %}
     <table class="table table-borderless text-center">
         <tr class = "sticky-top">
-            {% if app.user %}
             <th class="active text-center"></th>
-            {% endif %}
             <th class="active text-center">{{knp_pagination_sortable(pagination, 'Nom'|trans , 'a.crpt_Name')}}</th>
             <th class="active text-center">{{knp_pagination_sortable(pagination, 'Symbole'|trans , 'a.crpt_Symbol')}}</th>
             <th class="active text-center">{{knp_pagination_sortable(pagination, 'Prix'|trans , 'a.crpt_Price')}}</th>
@@ -21,9 +19,7 @@
 
         {% for crypto in pagination %}
             <tr>
-                {% if app.user %}
-                <td><a href="{{ path('app_crpt_fav', {'id': crypto.id}) }}">Fav</a> <a href="{{ path('app_crpt_fav', {'id': crypto.id}) }}">UnFav</a></td>
-                {% endif %}
+                <td><a href="{{ path('app_crpt_unfav', {'id': crypto.id}) }}">UnFav</a></td>
                 <td><a href="{{ path('app_crpt_show', {'id': crypto.id}) }}">{{ crypto.CrptName }}</a></td>
                 <td>{{ crypto.CrptSymbol }}</td>
                 <td>{{ crypto.CrptPrice }} USD</td>

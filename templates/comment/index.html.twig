@@ -1,19 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Comment index{% endblock %}
+{% block title %}{{ 'comment.index.title'|trans }}{% endblock %}
 
 {% block body %}
-    <h1>Comment index</h1>
+    <h1>{{ 'comment.index.title'|trans }}</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Com_DateTime</th>
-                <th>Com_Text</th>
-                <th>Com_Author</th>
-                <th>Com_Subject</th>
-                <th>actions</th>
+                <th>ID</th>
+                <th>{{ 'comment.index.date'|trans }}</th>
+                <th>{{ 'comment.index.text'|trans }}</th>
+                <th>{{ 'comment.index.author'|trans }}</th>
+                <th>{{ 'comment.index.subject'|trans }}</th>
             </tr>
         </thead>
         <tbody>
@@ -25,13 +24,13 @@
                 <td>{{ comment.comOwner }}</td>
                 <td>{{ comment.comSubject }}</td>
                 <td>
-                    <a href="{{ path('app_comment_show', {'id': comment.id}) }}">show</a>
-                    <a href="{{ path('app_comment_edit', {'id': comment.id}) }}">edit</a>
+                    <a href="{{ path('app_comment_show', {'id': comment.id}) }}">{{ 'comment.index.showbtn'|trans }}</a>
+                    <a href="{{ path('app_comment_edit', {'id': comment.id}) }}">{{ 'comment.index.editbtn'|trans }}</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="4">{{ 'No records found'|trans }}</td>
             </tr>
         {% endfor %}
         </tbody>
