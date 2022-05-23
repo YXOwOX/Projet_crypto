@@ -12,7 +12,9 @@ class CommentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('com_Text')
+              ->add('com_Text', null, array(
+                'label' => true // Will generate: "form.register.children.name.label"
+            ));
         ;
     }
 

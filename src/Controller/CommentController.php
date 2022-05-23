@@ -12,6 +12,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 
+
+/**
+ * @Route("/{_locale}")
+ */
 class CommentController extends AbstractController
 {
      private $security;
@@ -32,7 +36,7 @@ class CommentController extends AbstractController
     }
 
     /**
-     * @Route("auth/comment/new/{id}", name="app_comment_new", methods={"GET","POST"})
+     * @Route("/auth/comment/new/{id}", name="app_comment_new", methods={"GET","POST"})
      */
     public function new(Request $request, CommentRepository $commentRepository, Cryptocurrency $id): Response
     {
@@ -60,7 +64,7 @@ class CommentController extends AbstractController
     }
 
     /**
-     * @Route("auth/comment/{id}", name="app_comment_show", methods={"GET"})
+     * @Route("/auth/comment/{id}", name="app_comment_show", methods={"GET"})
      */
     public function show(Comment $comment): Response
     {
@@ -70,7 +74,7 @@ class CommentController extends AbstractController
     }
 
     /**
-     * @Route("auth/comment/{id}/edit", name="app_comment_edit", methods={"GET", "POST"})
+     * @Route("/auth/comment/{id}/edit", name="app_comment_edit", methods={"GET", "POST"})
      */
     public function edit(Request $request, Comment $comment, CommentRepository $commentRepository): Response
     {
@@ -89,7 +93,7 @@ class CommentController extends AbstractController
     }
 
     /**
-     * @Route("auth/comment/{id}", name="app_comment_delete", methods={"POST"})
+     * @Route("/auth/comment/{id}", name="app_comment_delete", methods={"POST"})
      */
     public function delete(Request $request, Comment $comment, CommentRepository $commentRepository): Response
     {
