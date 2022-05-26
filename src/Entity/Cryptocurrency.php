@@ -60,6 +60,11 @@ class Cryptocurrency
      */
     private $crpt_Comments;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $crpt_IdMoy;
+
 
     public function __toString()
     {
@@ -224,6 +229,18 @@ class Cryptocurrency
                 $crptComment->setComSubject(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCrptIdMoy(): ?string
+    {
+        return $this->crpt_IdMoy;
+    }
+
+    public function setCrptIdMoy(?string $crpt_IdMoy): self
+    {
+        $this->crpt_IdMoy = $crpt_IdMoy;
 
         return $this;
     }

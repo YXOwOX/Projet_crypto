@@ -72,6 +72,7 @@ class AppFixtures extends Fixture
 
 
 
+
       $cat_url = 'https://api.coingecko.com/api/v3/coins/categories';
       $cat_parameters = [
       ];
@@ -159,7 +160,8 @@ class AppFixtures extends Fixture
              $itera = 0;
              foreach (json_decode($response, true) as $r) {
                $crpt = new Cryptocurrency();
-               $crpt->setCrptName($r["name"]);                //set currency a name
+               $crpt->setCrptIdMoy($r["id"]);
+               $crpt->setCrptName($r["name"]);                               //set currency a name
                $crpt->setCrptSymbol($r["symbol"]);            //set the currency its symbol
                $crpt->setCrptPrice($r["current_price"]);      //set the currency its current price
                $crpt->setCrptMarketCap($r["market_cap"]);     //set the currency's marketcap
