@@ -13,6 +13,9 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Repository\CryptocurrencyRepository;
 use Symfony\Component\Security\Core\Security;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+
 
 /**
  * @Route("/{_locale}")
@@ -38,6 +41,7 @@ class CryptocurrencyController extends AbstractController
 
          $dql   = "SELECT a FROM App\Entity\Cryptocurrency a";
          $query = $em->createQuery($dql);
+         $variations = array();
 
          $pagination = $paginator->paginate(
              $query, /* query NOT result */
@@ -49,67 +53,44 @@ class CryptocurrencyController extends AbstractController
          return $this->render('cryptocurrency/list.html.twig', [
              'pagination' => $pagination,
              'cats_Name' => $categories,
+             'vars' => $variations,
          ]);
     }
 
     /**
-     * @Route("/category", name = "app_category")
-     */
-     public function listCategory(PaginatorInterface $paginator, Request $request)
-     {
-        $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
-       //$crptRepo = new CryptocurrencyRepository();
-       $query = $this->getDoctrine()->getRepository(Cryptocurrency::class)->findByCategory($_POST['cat']);
+       * @Route("/category", name = "app_category")
+       */
+       public function listCategory(PaginatorInterface $paginator, Request $request)
+       {
+         $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
+         //$crptRepo = new CryptocurrencyRepository();
+         $query = $this->getDoctrine()->getRepository(Cryptocurrency::class)->findByCategory($_POST['cat']);
 
-       $pagination = $paginator->paginate(
-           $query, /* query NOT result */
-           $request->query->getInt('page', 1), /*page number*/
-           50 /*limit per page*/
-       );
+         $pagination = $paginator->paginate(
+             $query, /* query NOT result */
+             $request->query->getInt('page', 1), /*page number*/
+             50 /*limit per page*/
+         );
 
-       return $this->render('cryptocurrency/list.html.twig', [
-           'pagination' => $pagination,
-           'cats_Name' => $categories,
-       ]);
-     }
+         return $this->render('cryptocurrency/list.html.twig', [
+             'pagination' => $pagination,
+             'cats_Name' => $categories,
+         ]);
+       }
+
+
 
      /**
-     * @Route("/price", name = "app_price")
-     */
-     public function searchPrice(PaginatorInterface $paginator, Request $request)
-     {
-
-        $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
-         dump($_POST['Min']);
-         dump ($_POST['Max']);
-       //$crptRepo = new CryptocurrencyRepository();
-       $query = $this->getDoctrine()->getRepository(Cryptocurrency::class)->findPrice($_POST['Max'], $_POST['Min']);
-
-       dump($query);
-
-       $pagination = $paginator->paginate(
-           $query, /* query NOT result */
-           $request->query->getInt('page', 1), /*page number*/
-           50 /*limit per page*/
-       );
-
-       return $this->render('cryptocurrency/list.html.twig', [
-           'pagination' => $pagination,
-           'cats_Name' => $categories,
-       ]);
-     }
-
-    /**
-     * @Route("/followers", name = "app_followers")
-     */
-    public function searchFollowers(PaginatorInterface $paginator, Request $request)
+    * @Route("/price", name = "app_price")
+    */
+    public function searchPrice(PaginatorInterface $paginator, Request $request)
     {
 
        $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
-        dump($_POST['min']);
-        dump ($_POST['max']);
+        dump($_POST['Min']);
+        dump ($_POST['Max']);
       //$crptRepo = new CryptocurrencyRepository();
-      $query = $this->getDoctrine()->getRepository(Cryptocurrency::class)->findFollowers($_POST['max'], $_POST['min']);
+      $query = $this->getDoctrine()->getRepository(Cryptocurrency::class)->findPrice($_POST['Max'], $_POST['Min']);
 
       dump($query);
 
@@ -125,26 +106,137 @@ class CryptocurrencyController extends AbstractController
       ]);
     }
 
+
+    /**
+    * @Route("/followers", name = "app_followers")
+    */
+   public function searchFollowers(PaginatorInterface $paginator, Request $request)
+   {
+
+      $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
+       dump($_POST['min']);
+       dump ($_POST['max']);
+     //$crptRepo = new CryptocurrencyRepository();
+     $query = $this->getDoctrine()->getRepository(Cryptocurrency::class)->findFollowers($_POST['max'], $_POST['min']);
+
+     dump($query);
+
+     $pagination = $paginator->paginate(
+         $query, /* query NOT result */
+         $request->query->getInt('page', 1), /*page number*/
+         50 /*limit per page*/
+     );
+
+     return $this->render('cryptocurrency/list.html.twig', [
+         'pagination' => $pagination,
+         'cats_Name' => $categories,
+     ]);
+   }
+
+
      /**
-      * @Route("/cryptocurrency", name = "app_namesearch")
+      * @Route("/cryptocurrency/name", name = "app_namesearch")
       */
-      public function listName(PaginatorInterface $paginator, Request $request)
+      public function listName(PaginatorInterface $paginator, Request $request, UrlGeneratorInterface $urlGenerator) : Response
       {
-        //$crptRepo = new CryptocurrencyRepository();
-        $query = $this->getDoctrine()->getRepository(Cryptocurrency::class)->findOneBy(array('crpt_Name' => $_POST['name']));
+          $crpt = $this->getDoctrine()->getRepository(Cryptocurrency::class)->findOneBy(array('crpt_Name' => $_POST['crpt_Name']));
+          $idMoy = $this->getDoctrine()->getRepository(Cryptocurrency::class)->findOneBy(array('crpt_Name' => $_POST['crpt_Name']))->getCrptIdMoy();
 
-        dump($name);
+          $url = "https://api.coingecko.com/api/v3/coins/".$idMoy."/ohlc?vs_currency=usd&days=365";
+          $json = file_get_contents($url);
+          $tabData = json_decode($json, true);
 
-        $pagination = $paginator->paginate(
-            $query, /* query NOT result */
-            $request->query->getInt('page', 1), /*page number*/
-            50 /*limit per page*/
-        );
+          $max = 0;
+          $min = 0;
 
-        return $this->render('cryptocurrency/list.html.twig', [
-            'pagination' => $pagination,
-        ]);
+          foreach ($tabData as $day) {
+
+              if($day[1] > $max){
+                $max = $day[1];
+              }
+
+              if ($day[2] < $min) {
+                $min = $day[2];
+              }
+            }
+
+          if ($min == 0) {
+           $min = 1;
+          }
+
+          $Moyenne = ($max + $min)/2;
+
+
+          if ($crpt != null) {
+            $comments = $this->getDoctrine()->getRepository(Cryptocurrency::class)->findOneBy(array('crpt_Name' => $_POST['crpt_Name']))->getCrptComments();
+
+            return $this->render('cryptocurrency/show.html.twig', [
+                'crpt' => $crpt,
+                'comments' => $comments,
+                'moy' => $Moyenne
+            ]);
+          }
+          else {
+            return new RedirectResponse($urlGenerator->generate('app_cryptocurrency'));
+          }
+
       }
+
+
+      /**
+       * @Route("/cryptocurrency/average", name = "app_avgsearch")
+       */
+       public function listAverage(PaginatorInterface $paginator, Request $request, UrlGeneratorInterface $urlGenerator) : Response
+       {
+           $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
+           $tab_crpt = array();
+           $crpt = $this->getDoctrine()->getRepository(Cryptocurrency::class)->findAll();
+
+           dump($crpt);
+
+           foreach ($crpt as $key => $crypto) {
+             $url = "https://api.coingecko.com/api/v3/coins/".$crypto->getCrptIdMoy()."/ohlc?vs_currency=usd&days=365";
+             $json = file_get_contents($url);
+             $tabData = json_decode($json, true);
+
+             $max = 0;
+             $min = 0;
+
+             foreach ($tabData as $day) {
+
+                 if($day[1] > $max){
+                   $max = $day[1];
+                 }
+
+                 if ($day[2] < $min) {
+                   $min = $day[2];
+                 }
+               }
+
+             if ($min == 0) {
+              $min = 1;
+             }
+
+             $Moyenne = ($max + $min)/2;
+
+             if ($crypto->getCrptPrice() > $Moyenne) {
+               array_push($tab_crpt, $crypto);
+             }
+           }
+
+           $pagination = $paginator->paginate(
+               $tab_crpt, /* query NOT result */
+               $request->query->getInt('page', 1), /*page number*/
+               50 /*limit per page*/
+           );
+
+           return $this->render('cryptocurrency/list.html.twig', [
+               'pagination' => $pagination,
+               'cats_Name' => $categories,
+           ]);
+
+       }
+
 
 
      /**
@@ -152,10 +244,35 @@ class CryptocurrencyController extends AbstractController
       */
      public function show(Cryptocurrency $crpt, $id): Response
      {
-         $comments = $this->getDoctrine()->getRepository(Cryptocurrency::class)->findOneBy(array('id' => $id))->getCrptComments();
+
+         $idMoy = $this->getDoctrine()->getRepository(Cryptocurrency::class)->findOneBy(array('id' => $id))->getCrptIdMoy();
+
+         $url = "https://api.coingecko.com/api/v3/coins/".$idMoy."/ohlc?vs_currency=usd&days=365";
+         $json = file_get_contents($url);
+         $tabData = json_decode($json, true);
+
+         $max = 0;
+         $min = 0;
+
+         foreach ($tabData as $day) {
+
+             if($day[1] > $max){
+               $max = $day[1];
+             }
+
+             if ($day[2] < $min) {
+               $min = $day[2];
+             }
+          }
+
+        $Moyenne = ($max + $min)/2;
+
+
+        $comments = $this->getDoctrine()->getRepository(Cryptocurrency::class)->findOneBy(array('id' => $id))->getCrptComments();
          return $this->render('cryptocurrency/show.html.twig', [
              'crpt' => $crpt,
              'comments' => $comments,
+             'moy' => $Moyenne
          ]);
      }
 
