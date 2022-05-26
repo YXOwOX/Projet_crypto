@@ -47,6 +47,29 @@ class CryptocurrencyRepository extends ServiceEntityRepository
         }
     }
 
+    public function findPrice($max, $min)
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.crpt_Price < :max')
+            ->andWhere('p.crpt_Price > :min')
+            ->setParameter('max', $max)
+            ->setParameter('min', $min)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findFollowers($max, $min)
+    {
+        return $this->createQueryBuilder('f')
+            ->andWhere('f.crpt_TwitterFollowers < :max')
+            ->andWhere('f.crpt_TwitterFollowers > :min')
+            ->setParameter('max', $max)
+            ->setParameter('min', $min)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
     // /**
     //  * @return Cryptocurrency[] Returns an array of Cryptocurrency objects
     //  */
@@ -93,4 +116,5 @@ class CryptocurrencyRepository extends ServiceEntityRepository
         ;
     }
     */
+
 }

@@ -16,7 +16,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 use Symfony\Component\Security\Core\Security;
 
-
+/**
+ * @Route("/{_locale}")
+ */
 class UserController extends AbstractController
 {
 
@@ -117,4 +119,5 @@ class UserController extends AbstractController
 
         return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
     }
+
 }

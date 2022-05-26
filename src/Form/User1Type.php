@@ -13,10 +13,18 @@ class User1Type extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('user_Pseudo')
-            ->add('user_Password', PasswordType::class)
-            ->add('user_Mail')
-            ->add('user_Role')
+            ->add('user_Pseudo', null, array(
+              'label' => true // Will generate: "form.register.children.name.label"
+          ))
+            ->add('user_Password', null, array(
+              'label' => true // Will generate: "form.register.children.name.label"
+          ), PasswordType::class)
+            ->add('user_Mail', null, array(
+              'label' => true // Will generate: "form.register.children.name.label"
+          ))
+            ->add('user_Role', null, array(
+              'label' => true // Will generate: "form.register.children.name.label"
+          ))
         ;
     }
 
