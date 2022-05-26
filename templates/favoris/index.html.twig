@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block tools %}
+    {{ include('tools/tools.html.twig') }}
+{% endblock %}
+
+{% block body %}
+    <table class="table table-borderless text-center">
+        <tr class = "sticky-top">
+            <th class="active text-center"></th>
+            <th class="active text-center">{{knp_pagination_sortable(pagination, 'Nom'|trans , 'a.crpt_Name')}}</th>
+            <th class="active text-center">{{knp_pagination_sortable(pagination, 'Symbole'|trans , 'a.crpt_Symbol')}}</th>
+            <th class="active text-center">{{knp_pagination_sortable(pagination, 'Prix'|trans , 'a.crpt_Price')}}</th>
+            <th class="active text-center">{{knp_pagination_sortable(pagination, 'Market Cap', 'a.crpt_MarketCap')}}</th>
+            <th class="active text-center">{{knp_pagination_sortable(pagination, 'Followers', 'a.crpt_TwitterFollowers')}}</th>
+        </tr>
+
+        {% for crypto in pagination %}
+            <tr>
+                <td><a class="btn btn-primary bx-tada-hover" href="{{ path('app_crpt_fav', {'id': crypto.id}) }}"><i class='bx bx-dislike bx-flashing-hover' ></i></a></td>
+                <td><a href="{{ path('app_crpt_show', {'id': crypto.id}) }}">{{ crypto.CrptName }}</a></td>
+                <td>{{ crypto.CrptSymbol }}</td>
+                <td>{{ crypto.CrptPrice }} USD</td>
+                <td>{{ crypto.CrptMarketCap }}</td>
+                <td>{{ crypto.CrptTwitterFollowers }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
