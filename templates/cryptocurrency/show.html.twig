@@ -5,7 +5,7 @@
 {% block body %}
     <h1>{{ 'crpt.show.title'|trans }}</h1>
 
-    <table class="table-show">
+    <table class="table">
         <tbody>
             <tr>
                 <th>{{ 'Nom'|trans }}</th>
@@ -26,9 +26,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_comment_new', {'id': crpt.id}) }}">{{ 'crpt.show.comment'|trans }}</a>
+    <a class="btn btn-primary" href="{{ path('app_comment_new', {'id': crpt.id}) }}">{{ 'crpt.show.comment'|trans }}</a>
 
-    <a href="{{ path('app_cryptocurrency') }}">{{ 'back to list'|trans }}</a>
+    <a class="btn btn-primary" href="{{ path('app_cryptocurrency') }}">{{ 'back to list'|trans }}</a>
 
     {{ include('comment/index.html.twig') }}
 

@@ -1,7 +1,7 @@
-<form method = "post">
+<form action ="{{ path('app_namesearch') }}" method = "post">
   <div class="search-container">
-     <input type="text" placeholder="Search.." name="name">
-     <button type="submit" class="btn btn-lg btn-primary"> Valider</button>
+     <input type="text" placeholder="Search..." name = "crpt_Name">
+     <input class="btn btn-lg btn-primary" type = "submit">
   </div>
 </form>
 
@@ -17,6 +17,8 @@
   </form>
 </div>
 
+<a class="btn btn-success" href="{{ path('app_avgsearch') }}" class="nav_link">Rentable</a>
+
 
 <div class = "nav-center">
   <form action="{{path('app_followers')}}" method="POST" name="formulaire">
@@ -29,11 +31,12 @@
   </form>
 </div>
 
-  <form action="{{ path('app_category') }}" method="post">
+
+<form action="{{ path('app_category') }}" method="post">
     <select name="cat" id="cat" title="Catégories" >
       {% for category in cats_Name %}
         <option  value="{{ category.CatName }}">{{ category.CatName }}</option>
       {% endfor %}
     </select>
     <button  type="submit" class="btn btn-lg btn-primary"> Valider</button>
-  </form>
+</form>

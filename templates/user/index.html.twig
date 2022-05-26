@@ -22,8 +22,8 @@
                 <td>{{ user.userMail }}</td>
                 <td>{{ user.userRole ? user.userRole|json_encode : '' }}</td>
                 <td>
-                    <a href="{{ path('app_user_show', {'id': user.id}) }}">{{ 'user.index.showbtn'|trans }}</a>
-                    <a href="{{ path('app_user_edit', {'id': user.id}) }}">{{ 'user.index.editbtn'|trans }}</a>
+                    <a class="btn btn-primary" href="{{ path('app_user_show', {'id': user.id}) }}">{{ 'user.index.showbtn'|trans }}</a>
+                    <a class="btn btn-primary" href="{{ path('app_user_edit', {'id': user.id}) }}">{{ 'user.index.editbtn'|trans }}</a>
                 </td>
             </tr>
         {% else %}
@@ -34,5 +34,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_user_new') }}">{{ 'Create new'|trans }}</a>
+    <a class="btn btn-primary" href="{{ path('app_user_new') }}">{{ 'Create new'|trans }}</a>
 {% endblock %}
