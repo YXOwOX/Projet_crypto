@@ -29,7 +29,7 @@
 
 </head>
 
-{% block title %}Log in!{% endblock %}
+{% block title %}{{ 'login.title'|trans }}{% endblock %}
 
 {% block body %}
 <form method="post">
@@ -39,14 +39,14 @@
 
     {% if app.user %}
         <div class="mb-3">
-            You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+            {{ 'You are logged as'|trans }} {{ app.user.username }}, <a href="{{ path('app_logout') }}">{{ 'login.logoutbtn'|trans }}</a>
         </div>
     {% endif %}
 
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputUser_Pseudo">User_ Pseudo</label>
+    <h1 class="h3 mb-3 font-weight-normal">{{ 'Please Sign In'|trans }}</h1>
+    <label for="inputUser_Pseudo">{{ 'login.user_pseudolbl'|trans }}</label>
     <input type="text" value="{{ last_username }}" name="user_Pseudo" id="inputUser_Pseudo" class="form-control" autocomplete="username" required autofocus>
-    <label for="inputPassword">Password</label>
+    <label for="inputPassword">{{ 'login.passwordlbl'|trans }}</label>
     <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
 
     <input type="hidden" name="_csrf_token"
@@ -65,11 +65,13 @@
     #}
 
     <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
+        {{ 'login.SignInbtn'|trans }}
     </button>
 
-    <a href= "{{ path('app_home') }}" class="btn btn-lg btn-primary"> Invité </a>
-    <a href= "{{ path('app_user_new') }}" class="btn btn-lg btn-primary"> Nouveau </a>
+    <a href= "{{ path('app_home') }}" class="btn btn-lg btn-primary"> {{ 'login.Invitebtn'|trans }} </a>
+    <a href= "{{ path('app_user_new') }}" class="btn btn-lg btn-primary">{{ 'login.Newbtn'|trans }}</a>
+
+
 
 </form>
 {% endblock %}
