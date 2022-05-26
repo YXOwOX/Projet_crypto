@@ -18,9 +18,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_user_index') }}">{{ 'back to list'|trans }}</a>
+    <a class="btn btn-primary" href="{{ path('app_user_index') }}">{{ 'back to list'|trans }}</a>
 
-    <a href="{{ path('app_user_edit', {'id': user.id}) }}">{{ 'user.show.editbtn'|trans }}</a>
+    <a class="btn btn-primary" href="{{ path('app_user_edit', {'id': user.id}) }}">{{ 'user.show.editbtn'|trans }}</a>
 
     {{ include('user/_delete_form.html.twig') }}
 

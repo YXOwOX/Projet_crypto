@@ -58,21 +58,20 @@ class CryptocurrencyController extends AbstractController
     }
 
     /**
-     * @Route("/category/{cat}", name = "app_category")
-     */
-     public function listCategory(PaginatorInterface $paginator, Request $request, $cat)
-     {
-       $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
-       //$crptRepo = new CryptocurrencyRepository();
-       $query = $this->getDoctrine()->getRepository(Cryptocurrency::class)->findByCategory($cat);
 
-       dump($cat);
+       * @Route("/category", name = "app_category")
+       */
+       public function listCategory(PaginatorInterface $paginator, Request $request)
+       {
+         $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
+         //$crptRepo = new CryptocurrencyRepository();
+         $query = $this->getDoctrine()->getRepository(Cryptocurrency::class)->findByCategory($_POST['cat']);
 
-       $pagination = $paginator->paginate(
-           $query, /* query NOT result */
-           $request->query->getInt('page', 1), /*page number*/
-           50 /*limit per page*/
-       );
+         $pagination = $paginator->paginate(
+             $query, /* query NOT result */
+             $request->query->getInt('page', 1), /*page number*/
+             50 /*limit per page*/
+         );
 
        return $this->render('cryptocurrency/list.html.twig', [
            'pagination' => $pagination,
@@ -81,7 +80,63 @@ class CryptocurrencyController extends AbstractController
      }
 
 
+
      /**
+    * @Route("/price", name = "app_price")
+    */
+    public function searchPrice(PaginatorInterface $paginator, Request $request)
+    {
+
+       $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
+        dump($_POST['Min']);
+        dump ($_POST['Max']);
+      //$crptRepo = new CryptocurrencyRepository();
+      $query = $this->getDoctrine()->getRepository(Cryptocurrency::class)->findPrice($_POST['Max'], $_POST['Min']);
+
+      dump($query);
+
+      $pagination = $paginator->paginate(
+          $query, /* query NOT result */
+          $request->query->getInt('page', 1), /*page number*/
+          50 /*limit per page*/
+      );
+
+      return $this->render('cryptocurrency/list.html.twig', [
+          'pagination' => $pagination,
+          'cats_Name' => $categories,
+      ]);
+    }
+
+
+    /**
+    * @Route("/followers", name = "app_followers")
+    */
+   public function searchFollowers(PaginatorInterface $paginator, Request $request)
+   {
+
+      $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
+       dump($_POST['min']);
+       dump ($_POST['max']);
+     //$crptRepo = new CryptocurrencyRepository();
+     $query = $this->getDoctrine()->getRepository(Cryptocurrency::class)->findFollowers($_POST['max'], $_POST['min']);
+
+     dump($query);
+
+     $pagination = $paginator->paginate(
+         $query, /* query NOT result */
+         $request->query->getInt('page', 1), /*page number*/
+         50 /*limit per page*/
+     );
+
+     return $this->render('cryptocurrency/list.html.twig', [
+         'pagination' => $pagination,
+         'cats_Name' => $categories,
+     ]);
+   }
+
+
+     /**
+
       * @Route("/cryptocurrency/name", name = "app_namesearch")
       */
       public function listName(PaginatorInterface $paginator, Request $request, UrlGeneratorInterface $urlGenerator) : Response
