@@ -4,7 +4,9 @@
 <head>
   {% block head %}
 
-    <title>{% block title %}{{ 'user.new.title'|trans }}{% endblock %}</title>
+
+    <title>{% block title %}{{ 'user.edit.title'|trans }}{% endblock %}</title>
+
 
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -47,7 +49,9 @@
                 <div class="form-icon">
                     <span><i class="icon icon-user"></i></span>
                 </div>
-                <h1 class="form-title">{{ 'user.new.title'|trans }}</h1>
+
+                <h1 class="form-title">{{ 'user.edit.title'|trans }}</h1>
+
                 <div class="col-12">
                         {{ form_label(form.user_Pseudo) }}
                 </div>
@@ -74,8 +78,9 @@
                 </div>
         </div>
         <div class="registration-form">
-          <button class="btn btn-block create-account btn-success">{{ button_label|default('Save') }}</button>
-          <a class="btn btn-block create-account btn-danger" href="{{ path('app_cryptocurrency') }}">{{ 'back to list'|trans }}</a>
+          <button class="btn btn-block create-account btn-success">{{ 'Valid'|trans }}</button> 
+          <a class="btn btn-block create-account btn-danger" href="{{ path('app_user_index') }}">{{ 'back to list'|trans }}</a>
+
         </div>
 {{ form_end(form) }}
 </div>

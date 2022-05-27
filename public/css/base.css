@@ -180,26 +180,21 @@ table {
   border-spacing: 0 15px;
   width: 100%;
 }
-
 td:nth-child(2) {
   border: 2px solid #245bdc;
   background-color: #245bdc;
   color: #FFFFFF;
 }
-
 td:nth-child(3) {
   border: 2px solid #245bdc;
   background-color: #245bdc;
   color: #FFFFFF;
 }
-
 td:nth-child(4) {
   border: 2px solid #245bdc;
   background-color: #245bdc;
   color: #FFFFFF;
 }
-
-
 td:nth-child(1) {
   border: 2px solid #245bdc;
   background-color: #245bdc;
@@ -207,19 +202,16 @@ td:nth-child(1) {
   font-color: #FFFFFF;
   font-weight: bold;
 }
-
 td:nth-child(6) {
   border: 2px solid #245bdc;
   background-color: #245bdc;
   border-radius: 0px 7px 7px 0px;
   color: #FFFFFF
 }
-
 td a
 {
   color: #FFFFFF
 }
-
 td a:hover
 {
   color: white;

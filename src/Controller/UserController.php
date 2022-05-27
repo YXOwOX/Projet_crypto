@@ -33,9 +33,22 @@ class UserController extends AbstractController
      */
     public function index(UserRepository $userRepository): Response
     {
+      $user = $this->security->getUser();
+      $id = $this->security->getUser()->getId();
+      $comments = $this->getDoctrine()->getRepository(User::class)->findOneBy(array('id' => $id))->getUserComments();
+
+      if($user && (in_array('ROLE_ADMIN', $user->getRoles()))) {
         return $this->render('user/index.html.twig', [
             'users' => $userRepository->findAll(),
         ]);
+      }
+      else {
+        return $this->render('user/show.html.twig', [
+            'comments' => $comments,
+            'user' => $user,
+        ]);
+      }
+
     }
 
     /**
@@ -54,7 +67,15 @@ class UserController extends AbstractController
               $passwordEncoder->encodePassword($user, $user->getPassword()));
               $entityManager->persist($user);
               $entityManager->flush();
-            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+
+              if(in_array('ROLE_ADMIN', $user->getRoles()))
+              {
+                return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+              }
+              else
+              {
+                return $this->redirectToRoute('app_login', [], Response::HTTP_SEE_OTHER);
+              }
         }
 
         $user = $this->security->getUser();

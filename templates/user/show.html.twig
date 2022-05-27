@@ -5,7 +5,7 @@
 {% block body %}
     <h1>{{ user.userPseudo }}</h1>
 
-    <table class="table-show">
+    <table class="table">
         <tbody>
             <tr>
                 <th>{{ 'user.show.mail'|trans }}</th>
@@ -18,7 +18,11 @@
         </tbody>
     </table>
 
+
+    {% if is_granted('ROLE_ADMIN')%}
     <a class="btn btn-primary" href="{{ path('app_user_index') }}">{{ 'back to list'|trans }}</a>
+    {% endif %}
+
 
     <a class="btn btn-primary" href="{{ path('app_user_edit', {'id': user.id}) }}">{{ 'user.show.editbtn'|trans }}</a>
 

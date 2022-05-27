@@ -26,8 +26,9 @@
         </tbody>
     </table>
 
-
+    {% if app.user %}
     <a class="btn btn-primary" href="{{ path('app_comment_new', {'id': crpt.id}) }}">{{ 'crpt.show.comment'|trans }}</a>
+    {% endif %}
 
     <a class="btn btn-primary" href="{{ path('app_cryptocurrency') }}">{{ 'back to list'|trans }}</a>
 

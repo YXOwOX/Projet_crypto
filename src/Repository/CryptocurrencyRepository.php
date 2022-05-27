@@ -124,7 +124,7 @@ class CryptocurrencyRepository extends ServiceEntityRepository
      */
     public function getAllLocationsAssoc(): array
     {
-        return $this->createQueryBuilder('c') 
+        return $this->createQueryBuilder('c')
             ->getQuery()
             ->getArrayResult();
     }

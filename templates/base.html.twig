@@ -75,9 +75,15 @@
                     <i class='bx bx-world nav_icon'></i>
                     <span class="nav_name bx-fade-right-hover">{{ 'Fr'|trans }}</span> </a>
                     {% else %}
-                    <a href="{{ path('app_cryptocurrency', {'_locale': 'sv'}) }}" class="nav_link nav-down">
-                    <i class='bx bx-world nav_icon'></i>
-                    <span class="nav_name bx-fade-right-hover">{{ 'Sv'|trans }}</span> </a>
+                      {% if app.request.locale == 'fr' %}
+                      <a href="{{ path('app_cryptocurrency', {'_locale': 'en'}) }}" class="nav_link nav-down">
+                      <i class='bx bx-world nav_icon'></i>
+                      <span class="nav_name bx-fade-right-hover">{{ 'En'|trans }}</span> </a>
+                      {% else %}
+                      <a href="{{ path('app_cryptocurrency', {'_locale': 'sv'}) }}" class="nav_link nav-down">
+                      <i class='bx bx-world nav_icon'></i>
+                      <span class="nav_name bx-fade-right-hover">{{ 'Sv'|trans }}</span> </a>
+                      {% endif %}
                     {% endif %}
 <!--
                     <i class='bx bx-folder nav_icon'></i>

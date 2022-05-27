@@ -22,7 +22,7 @@
             <tr>
                 {% if app.user %}
 
-                <td><a class="btn btn-primary bx-tada-hover" href="{{ path('app_crpt_fav', {'id': crypto.id}) }}"><i class='bx bx-like bx-flashing-hover'></i></a> <a class="btn btn-primary bx-tada-hover" href="{{ path('app_crpt_fav', {'id': crypto.id}) }}"><i class='bx bx-dislike bx-flashing-hover' ></i></a></td>
+                <td><a class="btn btn-primary bx-tada-hover" href="{{ path('app_crpt_fav', {'id': crypto.id}) }}"><i class='bx bx-like bx-flashing-hover'></i></td>
 
                 {% endif %}
                 <td><a href="{{ path('app_crpt_show', {'id': crypto.id}) }}">{{ crypto.CrptName }}</a></td>
