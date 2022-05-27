@@ -20,6 +20,7 @@
 <a class="btn btn-success" href="{{ path('app_avgsearch') }}" class="nav_link">{{ 'Rentable'|trans }}</a>
 
 
+
 <div class = "nav-center">
   <form action="{{path('app_followers')}}" method="POST" name="formulaire">
           <div class="form-group row-md-1">
@@ -27,7 +28,9 @@
             <input class="text" placeholder="Followers maximum" type="number" name = "max" size="15">
           </div>
          </div>
+
     <button type="submit" class="btn btn-lg btn-primary">{{ 'Valid'|trans }}</button>
+
   </form>
 </div>
 
@@ -39,4 +42,5 @@
       {% endfor %}
     </select>
     <button  type="submit" class="btn btn-lg btn-primary">{{ 'Valid'|trans }}</button>
+
 </form>

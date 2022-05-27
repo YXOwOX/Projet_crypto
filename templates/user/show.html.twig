@@ -18,9 +18,11 @@
         </tbody>
     </table>
 
+
     {% if is_granted('ROLE_ADMIN')%}
     <a class="btn btn-primary" href="{{ path('app_user_index') }}">{{ 'back to list'|trans }}</a>
     {% endif %}
+
 
     <a class="btn btn-primary" href="{{ path('app_user_edit', {'id': user.id}) }}">{{ 'user.show.editbtn'|trans }}</a>
 

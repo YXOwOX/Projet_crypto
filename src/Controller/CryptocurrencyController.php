@@ -58,6 +58,7 @@ class CryptocurrencyController extends AbstractController
     }
 
     /**
+
        * @Route("/category", name = "app_category")
        */
        public function listCategory(PaginatorInterface $paginator, Request $request)
@@ -135,6 +136,7 @@ class CryptocurrencyController extends AbstractController
 
 
      /**
+
       * @Route("/cryptocurrency/name", name = "app_namesearch")
       */
       public function listName(PaginatorInterface $paginator, Request $request, UrlGeneratorInterface $urlGenerator) : Response

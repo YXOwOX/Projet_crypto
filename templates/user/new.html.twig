@@ -73,12 +73,14 @@
                 </div>
         </div>
         <div class="registration-form">
+
           <button class="btn btn-block create-account btn-success">{{ 'Acc.Create'|trans }}</button>
           {% if is_granted('ROLE_ADMIN')%}
           <a class="btn btn-block create-account btn-danger" href="{{ path('app_user_index') }}">{{ 'Retour'|trans }}</a>
           {% else %}
           <a class="btn btn-block create-account btn-danger" href="{{ path('app_login') }}">{{ 'Retour'|trans }}</a>
           {% endif %}
+
         </div>
 {{ form_end(form) }}
 </div>
