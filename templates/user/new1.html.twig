@@ -1,26 +1,85 @@
-{% block title %}New Utilisateur{% endblock %}
+<!DOCTYPE html>
+<html>
+<head>
+  {% block head %}
 
-{% block body %}
-<h1>Create new Utilisateur</h1>
+    <title>{% block title %}{{ 'user.new.title'|trans }}{% endblock %}</title>
 
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    {% block stylesheets %}
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+      <link rel="stylesheet" href="{{ asset('css/newUser.css') }}">
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css" rel="stylesheet">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+      <link rel="stylesheet" href="assets/css/style.css">
+    {% endblock %}
+
+    {% block javascripts %}
+      <script src="https://cdn.jsdelivr.n	et/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+      <script type="text/javascript" src="{{ asset('js/newUser.js') }}"></script>
+      <script
+              src="https://code.jquery.com/jquery-3.5.1.min.js"
+                integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+                crossorigin="anonymous">
+      </script>
+      <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+      <script src="assets/js/script.js"></script>
+    {% endblock %}
+  {% endblock %}
+
+
+</head>
+
+<body>
+<div class="registration-form">
 {{ form_start(form, {'attr': {'id': 'new_edit_user'}}) }}
 {# utilisation de classes bootstrap pour la mise en forme #}
         <div class="row">
+                <div class="form-icon">
+                    <span><i class="icon icon-user"></i></span>
+                </div>
+                <h1 class="form-title">{{ 'user.new.title'|trans }}</h1>
                 <div class="col-12">
                         {{ form_label(form.user_Pseudo) }}
+                </div>
+                <div class="col-12 form-control item">
                         {{ form_widget(form.user_Pseudo) }}
                 </div>
                 <div class="col-12">
                         {{ form_label(form.user_Password) }}
+                </div>
+                <div class="col-12 form-control item">
                         {{ form_widget(form.user_Password) }}
                 </div>
                 <div class="col-12">
-                        <label for="verifpass">Saisir une seconde fois le mot de passe</label>
-                        <input type="user_Password" id="verifpass" required>
+                        {{ form_label(form.user_Mail) }}
+                </div>
+                <div class="col-12 form-control item">
+                        {{ form_widget(form.user_Mail) }}
+                </div>
+                <div class="col-12">
+                        {{ form_label(form.user_Role) }}
+                </div>
+                <div class="col-12 form-control item">
+                        {{ form_widget(form.user_Role) }}
                 </div>
         </div>
-        <button class="btn btn-success">{{ button_label|default('Save') }}</button>
+        <div class="registration-form">
+          <button class="btn btn-block create-account btn-success">{{ 'Acc.Create'|trans }}</button>
+          <a class="btn btn-block create-account btn-danger" href="{{ path('app_login') }}">{{ 'Retour'|trans }}</a>
+        </div>
 {{ form_end(form) }}
+</div>
 
-<a href="{{ path('app_cryptocurrency') }}">back to list</a>
-{% endblock %}
+
+</body>
+
+</html>

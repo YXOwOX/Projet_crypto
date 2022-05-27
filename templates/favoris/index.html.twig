@@ -3,7 +3,6 @@
 
 
 {% block tools %}
-    {{ include('tools/tools.html.twig') }}
 {% endblock %}
 
 {% block body %}
@@ -19,7 +18,7 @@
 
         {% for crypto in pagination %}
             <tr>
-                <td><a href="{{ path('app_crpt_unfav', {'id': crypto.id}) }}">UnFav</a></td>
+                <td><a class="btn btn-primary bx-tada-hover" href="{{ path('app_crpt_fav', {'id': crypto.id}) }}"><i class='bx bx-dislike bx-flashing-hover' ></i></a></td>
                 <td><a href="{{ path('app_crpt_show', {'id': crypto.id}) }}">{{ crypto.CrptName }}</a></td>
                 <td>{{ crypto.CrptSymbol }}</td>
                 <td>{{ crypto.CrptPrice }} USD</td>

@@ -26,9 +26,12 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_comment_new', {'id': crpt.id}) }}">{{ 'crpt.show.comment'|trans }}</a>
+    {% if app.user %}
+    <a class="btn btn-primary" href="{{ path('app_comment_new', {'id': crpt.id}) }}">{{ 'crpt.show.comment'|trans }}</a>
+    {% endif %}
 
-    <a href="{{ path('app_cryptocurrency') }}">{{ 'back to list'|trans }}</a>
+    <a class="btn btn-primary" href="{{ path('app_cryptocurrency') }}">{{ 'back to list'|trans }}</a>
+
 
     {{ include('comment/index.html.twig') }}
 
